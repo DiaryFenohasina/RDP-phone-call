@@ -1,0 +1,6 @@
+node_modules
+.env
+package-lock.json
+uploads
+/processed.png
+tessdata
