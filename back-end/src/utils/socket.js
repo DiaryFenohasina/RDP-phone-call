@@ -11,8 +11,7 @@ function initSocket(server) {
   io.on('connection', (socket) => {
     console.log(`Nouvelle connexion : ${socket.id}`);
     socket.on('disconnect', () => {
-      console.log(`❌ Déconnecté : ${userId} (${socket.id})`);
-      userSocketMap.delete(userId);
+      console.log(`❌ Déconnecté :(${socket.id})`);
     });
   });
 
