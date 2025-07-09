@@ -14,7 +14,7 @@ const io = initSocket(server);
 app.set('io', io);
 
 app.use(cors({
-  origin: ['http://localhost:5173','https://rdp-phone-call.vercel.app/'],
+  origin: ['http://localhost:5173','https://rdp-phone-call.vercel.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
