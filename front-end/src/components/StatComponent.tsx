@@ -12,8 +12,7 @@ export const StatsCard = ({ title, value, icon: Icon, color }) => (
     </div>
 );
 
-export const StatsPanel = ({ agents, calls }) => {
-    const totalAgents = 2;
+export const StatsPanel = ({ agents, calls, totalAgents }) => {
     const busyAgents = totalAgents - agents;
     const pendingCalls = calls.filter(call => call.state === 'pending').length;
     const urgentPendingCalls = calls.filter(call => call.state === 'pending' && call.urgent).length;

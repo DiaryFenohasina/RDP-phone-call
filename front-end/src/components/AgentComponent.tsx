@@ -39,8 +39,7 @@ export const AgentItem = ({ agentNumber, isAvailable, currentCall, onEndCall }) 
     </div>
 );
 
-export const AgentsPanel = ({ agents, calls, onEndCall }) => {
-    const totalAgents = 2;
+export const AgentsPanel = ({ agents, calls, onEndCall, totalAgents }) => {
     const inProgressCalls = calls.filter(call => call.state === 'in_progress');
 
     return (
@@ -50,7 +49,11 @@ export const AgentsPanel = ({ agents, calls, onEndCall }) => {
                 État des Agents
             </h2>
             
-            <div className="grid grid-cols-2 gap-4">
+            <div className={`grid gap-4 ${
+                totalAgents <= 2 ? 'grid-cols-2' : 
+                totalAgents <= 3 ? 'grid-cols-3' : 
+                totalAgents <= 4 ? 'grid-cols-2' : 'grid-cols-3'
+            }`}>
                 {Array.from({ length: totalAgents }, (_, index) => {
                     const agentNumber = index + 1;
                     const isAvailable = index < agents;
