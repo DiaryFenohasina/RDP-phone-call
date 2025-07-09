@@ -91,6 +91,14 @@ export default function PhoneSystem() {
         }
     };
 
+    const handleDropCall = async () => {
+        try {
+            await api.dropCall();
+        } catch (error) {
+            console.error('Erreur lors du drop call:', error);
+        }
+    };
+
     if (loading) return <LoadingScreen />;
 
     return (
@@ -105,7 +113,12 @@ export default function PhoneSystem() {
                         onEndCall={handleEndCall} 
                         totalAgents={totalAgents}
                     />
-                    <CallsPanel calls={calls} onAddCall={handleAddCall} onEndCall={handleEndCall} />
+                    <CallsPanel 
+                        calls={calls} 
+                        onAddCall={handleAddCall} 
+                        onEndCall={handleEndCall} 
+                        onDropCall={handleDropCall}
+                    />
                 </div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-import { Phone, PhoneCall, AlertCircle, PhoneOff} from 'lucide-react';
+import { Phone, PhoneCall, AlertCircle, PhoneOff, X} from 'lucide-react';
 
 const CallItem = ({ call, onEndCall }) => (
     <div className={`p-3 rounded-lg border-l-4 ${
@@ -44,12 +44,21 @@ const CallItem = ({ call, onEndCall }) => (
     </div>
 );
 
-export const CallsPanel = ({ calls, onAddCall, onEndCall }) => (
+export const CallsPanel = ({ calls, onAddCall, onEndCall, onDropCall }) => (
     <div className="bg-white rounded-lg shadow-lg p-6">
-        <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
-            <PhoneCall className="mr-2 text-blue-600" size={20} />
-            Gestion des Appels
-        </h2>
+        <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-bold text-gray-800 flex items-center">
+                <PhoneCall className="mr-2 text-blue-600" size={20} />
+                Gestion des Appels
+            </h2>
+            
+            <button
+                onClick={onDropCall}
+                className="bg-red-500 hover:bg-red-600 text-white py-2 px-3 rounded-lg transition-colors duration-200 flex items-center text-sm"
+            >
+                <X className="mr-1" size={16} />
+            </button>
+        </div>
         
         <div className="grid grid-cols-2 gap-4 mb-6">
             <button
@@ -83,4 +92,3 @@ export const CallsPanel = ({ calls, onAddCall, onEndCall }) => (
         </div>
     </div>
 );
-
