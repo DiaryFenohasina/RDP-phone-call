@@ -9,7 +9,8 @@ import { io , Socket} from 'socket.io-client';
 
 export default function PhoneSystem() {
     const socketRef = useRef<Socket | null>(null);
-    const [agents, setAgents] = useState(2);
+    const [agents, setAgents] = useState(0);
+    const [totalAgents, setTotalAgents] = useState(0);
     const [calls, setCalls] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isConnected, setIsConnected] = useState(false);
@@ -20,7 +21,14 @@ export default function PhoneSystem() {
                 api.getAgents(),
                 api.getState()
             ]);
-            setAgents(agentsData);
+            
+            // Calculer le nombre total d'agents et les agents disponibles
+            const inProgressCount = callsData.filter(call => call.state === 'in_progress').length;
+            const availableAgents = agentsData;
+            const totalAgentsCount = availableAgents + inProgressCount;
+            
+            setTotalAgents(totalAgentsCount);
+            setAgents(availableAgents);
             setCalls(callsData);
         } catch (error) {
             console.error('Erreur lors du chargement des données:', error);
@@ -51,7 +59,6 @@ export default function PhoneSystem() {
             setCalls(updatedCalls);
 
             const inProgressCount = updatedCalls.filter(call => call.state === 'in_progress').length;
-            const totalAgents = 2;
             setAgents(totalAgents - inProgressCount);
         });
 
@@ -66,7 +73,7 @@ export default function PhoneSystem() {
                 socketRef.current = null;
             }
         };
-    }, []);
+    }, [totalAgents]);
 
     const handleEndCall = async (callId) => {
         try {
@@ -90,9 +97,14 @@ export default function PhoneSystem() {
         <div className="min-h-screen bg-gray-100 p-6">
             <div className="max-w-7xl mx-auto">
                 <Header isConnected={isConnected} />
-                <StatsPanel agents={agents} calls={calls} />
+                <StatsPanel agents={agents} calls={calls} totalAgents={totalAgents} />
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <AgentsPanel agents={agents} calls={calls} onEndCall={handleEndCall} />
+                    <AgentsPanel 
+                        agents={agents} 
+                        calls={calls} 
+                        onEndCall={handleEndCall} 
+                        totalAgents={totalAgents}
+                    />
                     <CallsPanel calls={calls} onAddCall={handleAddCall} onEndCall={handleEndCall} />
                 </div>
             </div>
