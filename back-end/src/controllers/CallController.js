@@ -6,6 +6,12 @@ const getAgents = (req, res) => {
     res.json(agents).status(200)
 }
 
+const dropCall = (req, res) => {
+    const io = req.app.get('io');
+    calls = calls.filter(call => call.state !== 'ended');
+    io.emit('update', calls);
+}
+
 const call = (req, res) => {
     const io = req.app.get('io');
     const urgent = req.body?.urgent
@@ -74,5 +80,6 @@ module.exports = {
     getState,
     endCall,
     startCron,
-    getAgents
+    getAgents,
+    dropCall
 }

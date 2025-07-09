@@ -12,7 +12,7 @@ export const api = {
             return 2;
         }
     },
-    
+
     addCall: async (urgent = false) => {
         try {
             const response = await fetch(`${baseUrl}call`, {
@@ -25,7 +25,7 @@ export const api = {
             console.log(error);
         }
     },
-    
+
     getState: async () => {
         try {
             const response = await fetch(`${baseUrl}state`);
@@ -35,7 +35,7 @@ export const api = {
             return [];
         }
     },
-    
+
     endCall: async (id) => {
         try {
             const response = await fetch(`${baseUrl}end/${id}`, {
@@ -46,5 +46,18 @@ export const api = {
         } catch (error) {
             console.log(error);
         }
+    },
+
+    async dropCall() {
+        const response = await fetch(`${baseUrl}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            throw new Error('Erreur lors du drop call');
+        }
+        return await response.json();
     }
 };
