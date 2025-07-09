@@ -6,6 +6,7 @@ import { AgentsPanel } from '../AgentComponent';
 import { CallsPanel } from '../CallComponent'
 import { api } from './Function';
 import { io , Socket} from 'socket.io-client';
+import config from '../../../config.json'
 
 export default function PhoneSystem() {
     const socketRef = useRef<Socket | null>(null);
@@ -22,7 +23,6 @@ export default function PhoneSystem() {
                 api.getState()
             ]);
             
-            // Calculer le nombre total d'agents et les agents disponibles
             const inProgressCount = callsData.filter(call => call.state === 'in_progress').length;
             const availableAgents = agentsData;
             const totalAgentsCount = availableAgents + inProgressCount;
@@ -39,7 +39,7 @@ export default function PhoneSystem() {
 
     useEffect(() => {
         if (!socketRef.current) {
-            socketRef.current = io('http://localhost:3000');
+            socketRef.current = io(config['URL_SOCKET_PROD'] || config['URL_SOCKET_DEV'] );
         }
 
         const socket = socketRef.current;

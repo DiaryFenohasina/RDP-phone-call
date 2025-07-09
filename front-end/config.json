@@ -1,4 +1,6 @@
 {
     "URL_BACK_PROD": "https://rdp-phone-call-1.onrender.com/api/",
-    "URL_BACK_DEV": "http://localhost:3000/api/"
+    "URL_BACK_DEV": "http://localhost:3000/api/",
+    "URL_SOCKET_PROD": "https://rdp-phone-call-1.onrender.com",
+    "URL_SOCKET_DEV": "http://localhost:3000"
 }
