@@ -1,4 +1,6 @@
-const baseUrl = 'http://localhost:3000/api/';
+import config from '../../../config.json'
+const baseUrl = config['URL_BACK_PROD'] || config['URL_BACK_DEV']
+
 
 export const api = {
     getAgents: async () => {
